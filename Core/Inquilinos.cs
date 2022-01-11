@@ -16,7 +16,7 @@ namespace Core
 
         public int Telefone { get; set; }
 
-        public EmailAddressAttribute Email { get; set; }
+        public string Email { get; set; }
 
         public SexoDoInquilino Sexo { get; set; }
 

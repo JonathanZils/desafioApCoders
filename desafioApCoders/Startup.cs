@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Core;
+using Repositorio;
+using Microsoft.EntityFrameworkCore;
 
 namespace desafioApCoders
 {
@@ -23,7 +21,20 @@ namespace desafioApCoders
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<DataBaseSettings>(x => new DataBaseSettings
+            {
+                ConnectionString = "mongodb://localhost:27017",
+                DatabaseName = "ApCoders"
+            });
+            services.AddTransient<IService, Service>();
+
+            services.AddTransient<IDataBase, DataBase>();
+
             services.AddControllersWithViews();
+
+            services.AddMvcCore();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

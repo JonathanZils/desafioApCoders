@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Core.Inquilinos>
+@{
+    ViewData["title"] = "Index";
+}
+<style type="text/css">
+    table, tr {
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        width: 20%;
+    }
+
+    th {
+        background-color: lightblue;
+    }
+
+    tr {
+        background-color: lightgray;
+    }
+
+    button {
+        background: none !important;
+        border: none;
+        padding: 0 !important;
+        font-family: arial, sans-serif;
+        color: #069;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<h1>Inquilinos cadastrados</h1>
+<p></p>
+<div>
+    <div>
+        <form action="/inquilinos/registrar">
+            <input type="submit" value="Registrar novo inquilino" />
+            <p></p>
+        </form>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Sexo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var inquilino in Model)
+                    {
+                        <tr>
+                            <td>@inquilino.Nome</td>
+                            <td>@inquilino.Idade</td>
+                            <td>@inquilino.Telefone</td>
+                            <td>@inquilino.Email</td>
+                            <td>@inquilino.Sexo</td>
+                        </tr>
+                    }
+                }                           
+            </tbody>
+        </table>
+    </div>
+</div>
