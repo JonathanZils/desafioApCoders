@@ -1,0 +1,49 @@
+﻿@model Core.Unidades
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewBag.tittle = "Registrar";
+}
+<form asp-action="Registrar" asp-controller="Unidades">
+
+    <h2>Registro de Unidade</h2>
+
+    <div>
+        <table>
+            <tr>
+                <td><label asp-for="Identificacao"></label></td>
+                <td><input asp-for="Identificacao" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="Proprietario"></label></td>
+                <td><input asp-for="Proprietario" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="Condominio"></label></td>
+                <td><input asp-for="Condominio" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="Endereco"></label></td>
+                <td><input asp-for="Endereco" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Registrar" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

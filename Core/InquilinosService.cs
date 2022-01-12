@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public interface IService
+    public interface IServiceInquilino
     {
         List<Inquilinos> Get();
         void Insert(Inquilinos inquilinos);                
     }
-    public class Service : IService
+    public class ServiceInquilino : IServiceInquilino
     {
         IDataBase _database;
-        public Service(IDataBase database)
+        public ServiceInquilino(IDataBase database)
         {
             this._database = database;
         }
         public List<Inquilinos> Get()
         {
-            return _database.Get();
+            return _database.GetInquilino();
         }
         public void Insert(Inquilinos inquilinos)
         {
-            _database.InsertData(inquilinos);
+            _database.InsertInquilino(inquilinos);
         }
     }
 }

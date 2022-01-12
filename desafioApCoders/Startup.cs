@@ -26,7 +26,9 @@ namespace desafioApCoders
                 ConnectionString = "mongodb://localhost:27017",
                 DatabaseName = "ApCoders"
             });
-            services.AddTransient<IService, Service>();
+            services.AddTransient<IServiceInquilino, ServiceInquilino>();
+
+            services.AddTransient<IServiceUnidades, ServiceUnidades>();
 
             services.AddTransient<IDataBase, DataBase>();
 

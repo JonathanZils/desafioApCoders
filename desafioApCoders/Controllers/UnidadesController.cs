@@ -1,46 +1,46 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MongoDB.Driver;
-
+using Core;
 
 namespace desafioApCoders.Controllers
 {
-    public class InquilinosController : Controller
+    public class UnidadesController : Controller
     {
-        private IServiceInquilino _database;
-        public InquilinosController(IServiceInquilino database)
+        private IServiceUnidades _database;
+        public UnidadesController(IServiceUnidades database)
         {
             this._database = database;
         }
 
         [HttpGet]
-        public ActionResult<List<Inquilinos>> Index()
+        public ActionResult<List<Unidades>> Index()
         {
             return View("Index", _database.Get());
         }
 
-        [HttpGet("inquilinos/registrar")]
-        public ActionResult Registrar() 
-        { 
+        [HttpGet("unidades/registrar")]
+        public ActionResult Registrar()
+        {
             return View();
         }
 
-        [HttpPost("inquilinos/registrar")]
-        public ActionResult Registrar(Inquilinos inquilinos)
+        [HttpPost("unidades/registrar")]
+        public ActionResult Registrar(Unidades unidades)
         {
             if (ModelState.IsValid)
             {
-                _database.Insert(inquilinos);
+                _database.Insert(unidades);
                 return RedirectToAction("Index");
             }
             else
             {
                 return RedirectToAction("Registrar");
             }
-        }       
+        }
     }
 }
+

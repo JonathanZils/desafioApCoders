@@ -5,7 +5,10 @@ namespace Core
 {
     public interface IDataBase
     {
-        List<Inquilinos> Get();
-        void InsertData(Inquilinos inquilinos);       
+        List<Inquilinos> GetInquilino();
+        void InsertInquilino(Inquilinos inquilinos);
+
+        List<Unidades> GetUnidades();
+        void InsertUnidades(Unidades unidades);
     }
 }

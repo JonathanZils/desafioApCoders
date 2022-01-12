@@ -1,5 +1,4 @@
-﻿@model Core.Inquilinos
-
+﻿
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -23,6 +22,8 @@
                 <td><input asp-for="Idade" /></td>
             </tr>
             <tr>
+                @model Core.Inquilinos
+
                 <td colspan="2"></td>
             </tr>
             <tr>

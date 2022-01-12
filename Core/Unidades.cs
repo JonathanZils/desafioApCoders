@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core
 {
-    class Unidades
+    public class Unidades
     {
         [BsonId]
         public ObjectId Id { get; set; }

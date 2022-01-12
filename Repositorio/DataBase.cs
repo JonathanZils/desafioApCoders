@@ -11,18 +11,29 @@ namespace Repositorio
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
-            Collection = database.GetCollection<Inquilinos>("Inquilinos");
+            InquilinosCollection = database.GetCollection<Inquilinos>("Inquilinos");
+            UnidadesCollection = database.GetCollection<Unidades>("Unidades");
 
         }
-        public IMongoCollection<Inquilinos> Collection { get; set; }
+        public IMongoCollection<Inquilinos> InquilinosCollection { get; set; }
+        public IMongoCollection<Unidades> UnidadesCollection { get; set; }
 
-        public List<Inquilinos> Get() =>
+        public List<Inquilinos> GetInquilino() =>
 
-            Collection.Find(Inquilinos => true).ToList();
+            InquilinosCollection.Find(Inquilinos => true).ToList();
 
-        public void InsertData(Inquilinos inquilinos)
+        public void InsertInquilino(Inquilinos inquilinos)
         {
-            Collection.InsertOne(inquilinos);
+            InquilinosCollection.InsertOne(inquilinos);
         }
-     }
+
+        public List<Unidades> GetUnidades() =>
+
+           UnidadesCollection.Find(Unidades => true).ToList();
+
+        public void InsertUnidades(Unidades unidades)
+        {
+            UnidadesCollection.InsertOne(unidades);
+        }
+    }
 }
