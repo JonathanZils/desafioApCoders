@@ -23,14 +23,14 @@ namespace desafioApCoders
         {
             services.AddTransient<DataBaseSettings>(x => new DataBaseSettings
             {
-                ConnectionString = "mongodb://localhost:27017",
-                DatabaseName = "ApCoders"
+                ConnectionString = "Server=localhost;Database=postgres;Port=5432;User Id=postgres;Password=123;",
+                DatabaseName = "Apcoder"
             });
             services.AddTransient<IServiceInquilino, ServiceInquilino>();
 
             services.AddTransient<IServiceUnidades, ServiceUnidades>();
 
-            services.AddTransient<IDataBase, DataBase>();
+            services.AddTransient<IDataBase, Database>();
 
             services.AddControllersWithViews();
 

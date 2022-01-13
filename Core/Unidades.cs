@@ -1,15 +1,13 @@
 ﻿using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using Npgsql;
+using Dapper;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core
 {
     public class Unidades
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
-
+        
         public string Identificacao { get; set; }
 
         public string Proprietario { get; set; }

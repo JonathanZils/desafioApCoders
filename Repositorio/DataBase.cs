@@ -1,39 +1,57 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Dapper;
 using Core;
-using MongoDB.Driver;
+using Npgsql;
+using Microsoft.Extensions.Configuration;
 
 namespace Repositorio
 {
-    public class DataBase : IDataBase
+   public class Database : IDataBase
     {
-        public DataBase(DataBaseSettings settings)
+        private IConfiguration _configuracoes;
+
+        public Database(IConfiguration config)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            InquilinosCollection = database.GetCollection<Inquilinos>("Inquilinos");
-            UnidadesCollection = database.GetCollection<Unidades>("Unidades");
-
+            _configuracoes = config;
         }
-        public IMongoCollection<Inquilinos> InquilinosCollection { get; set; }
-        public IMongoCollection<Unidades> UnidadesCollection { get; set; }
-
-        public List<Inquilinos> GetInquilino() =>
-
-            InquilinosCollection.Find(Inquilinos => true).ToList();
-
-        public void InsertInquilino(Inquilinos inquilinos)
+        public List<Inquilinos> GetInquilino()
         {
-            InquilinosCollection.InsertOne(inquilinos);
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("ConnectionString")))
+            {
+                return (List<Inquilinos>)conn.Query<Inquilinos>("SELECT * FROM Inquilinos");
+            }
         }
+        public void InsertInquilino(Inquilinos inquilino)
+        {
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("connectionString")))
+            {
+                conn.Open();
 
-        public List<Unidades> GetUnidades() =>
-
-           UnidadesCollection.Find(Unidades => true).ToList();
-
+                var insert = @"INSERT INTO Inquilinos(Nome, Idade, Telefone, Email, Sexo) VALUES (@Nome, @Idade, @Telefone, @Email, @Sexo)";
+                conn.Execute(insert);
+            }
+        }
+        public List<Unidades> GetUnidades()
+        {
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("ConnectionString")))
+            {
+                return (List<Unidades>)conn.Query<Unidades>("SELECT * FROM Unidades");
+            }
+        }
         public void InsertUnidades(Unidades unidades)
         {
-            UnidadesCollection.InsertOne(unidades);
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("connectionString")))
+            {
+                conn.Open();
+
+                var insert = @"INSERT INTO Unidades(Identificacao, Proprietario, Condominio, Endereco) VALUES (@Idenificacao, @Proprietrio, @Condominio, @Endereco)";
+                conn.Execute(insert);
+            }
         }
     }
 }
