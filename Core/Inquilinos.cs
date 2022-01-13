@@ -6,8 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Core
 {
     public class Inquilinos
-    {
-           
+    {        
         public string Nome { get; set; }
       
         public int Idade { get; set; }

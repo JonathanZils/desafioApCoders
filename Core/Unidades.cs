@@ -12,7 +12,7 @@ namespace Core
 
         public string Proprietario { get; set; }
 
-        public string Condominio { get; set; }
+        public decimal Condominio { get; set; }
 
         public string Endereco { get; set; }
     }
