@@ -10,5 +10,8 @@ namespace Core
 
         List<Unidades> GetUnidades();
         void InsertUnidades(Unidades unidades);
+
+        List<Despesas> GetDespesas();
+        void InsertDespesas(Despesas despesas);
     }
 }

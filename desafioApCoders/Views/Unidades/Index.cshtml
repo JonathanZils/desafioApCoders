@@ -2,7 +2,7 @@
 @{
     ViewData["title"] = "Index";
 }
-<style type="text/css">
+<style type="text/css">   
     table, tr {
         width: 100%;
     }
@@ -36,7 +36,7 @@
 <div>
     <div>
         <form action="/unidades/registrar">
-            <input type="submit" value="Registrar nova unidade" />
+            <input type="submit" value="Registrar nova unidade"/>
             <p></p>
         </form>
     </div>
@@ -47,7 +47,8 @@
                     <th>Identificação</th>
                     <th>Proprietario</th>
                     <th>Condominio</th>
-                    <th>Endereço</th>                  
+                    <th>Endereço</th> 
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +60,9 @@
                             <td>@unidades.Endereco</td>
                             <td>@unidades.Proprietario</td>
                             <td>@unidades.Condominio</td>
-                            <td>@unidades.Endereco</td>                          
+                            <td>@unidades.Endereco</td>    
+                            <td><form asp-action="/unidades/vizualizar">
+                                      <input type="submit" value="Vizualizar"></form></td>
                         </tr>
                     }
                 }

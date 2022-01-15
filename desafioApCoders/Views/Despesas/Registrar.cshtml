@@ -1,49 +1,48 @@
-﻿@model Core.Inquilinos
+﻿@model Core.Despesas
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewBag.tittle = "Registrar";
 }
-<form asp-action="Registrar" asp-controller="inquilinos">
+<form asp-action="Registrar" asp-controller="despesas">
 
-    <h2>Registro de inquilinos</h2>
+    <h2>Registro de despesas</h2>
 
     <div>
         <table>
             <tr>
-                <td><label asp-for="Nome"></label></td>
-                <td><input asp-for="Nome" /></td>
+                <td><label asp-for="Descricao"></label></td>
+                <td><input asp-for="Descricao" /></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
             </tr>
             <tr>
-                <td><label asp-for="Idade"></label></td>
-                <td><input asp-for="Idade" /></td>
-            </tr>
-            <tr>
-
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><label asp-for="Telefone"></label></td>
-                <td><input asp-for="Telefone" /></td>
+                <td><label asp-for="TipoDespesas"></label></td>
+                <td><input asp-for="TipoDespesas" /></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
             </tr>
             <tr>
-                <td><label asp-for="Email"></label></td>
-                <td><input asp-for="Email" /></td>
+                <td><label asp-for="Valor"></label></td>
+                <td><input asp-for="Valor" /></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
             </tr>
             <tr>
-                <td><label asp-for="Sexo"></label></td>
+                <td><label asp-for="VencimentoFatura"></label></td>
+                <td><input type="text" asp-for="VencimentoFatura" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="StatusPagamento"></label></td>
                 <td>
-                    <select asp-for="Sexo" asp-items="Html.GetEnumSelectList<Core.Inquilinos.SexoDoInquilino>()">
+                    <select asp-for="StatusPagamento" asp-items="Html.GetEnumSelectList<Core.Despesas.StatusDoPagamento>()">
                         <option selected="selected" value="">Opções</option>
                     </select>
                 </td>

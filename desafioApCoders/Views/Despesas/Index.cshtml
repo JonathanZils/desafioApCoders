@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Core.Despesas>
+@{ 
+    ViewData["title"] = "index";
+}
+<style type="text/css">
+    table, tr {
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        width: 20%;
+    }
+
+    th {
+        background-color: lightblue;
+    }
+
+    tr {
+        background-color: lightgray;
+    }
+
+    button {
+        background: none !important;
+        border: none;
+        padding: 0 !important;
+        font-family: arial, sans-serif;
+        color: #069;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<h1>Despesas cadastradas</h1>
+<p></p>
+<div>
+    <div>
+        <form action="despesas/registrar">
+            <input type="submit" value="Registrar despesa" />
+        </form>
+    </div>
+    <p></p>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Tipo de despesa</th>
+                    <th>Valor</th>
+                    <th>Vencimento da fatura</th>
+                    <th>Status do pagamento</th>
+                </tr>
+            </thead>
+            <tbody>
+              @if (Model != null)
+              {
+                  foreach (var despesa in Model)
+                  {
+                      <tr>
+                          <td>@despesa.Descricao</td>
+                          <td>@despesa.TipoDespesas</td>
+                          <td>@despesa.Valor</td>
+                          <td>@despesa.VencimentoFatura</td>
+                          <td>@despesa.StatusPagamento</td>
+                      </tr>
+                  }
+              }
+            </tbody>
+        </table>
+    </div>
+</div>

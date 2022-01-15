@@ -21,14 +21,12 @@ namespace desafioApCoders
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<DataBaseSettings>(x => new DataBaseSettings
-            {
-                ConnectionString = "Server=localhost;Database=postgres;Port=5432;User Id=postgres;Password=123;",
-                DatabaseName = "Apcoder"
-            });
+           
             services.AddTransient<IServiceInquilino, ServiceInquilino>();
 
             services.AddTransient<IServiceUnidades, ServiceUnidades>();
+
+            services.AddTransient<IServiceDespesas, ServiceDespesas>();
 
             services.AddTransient<IDataBase, Database>();
 
@@ -59,11 +57,12 @@ namespace desafioApCoders
 
             app.UseAuthorization();
 
+          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Unidades}/{action=Index}/{id= }");
             });
         }
     }

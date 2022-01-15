@@ -7,10 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Repositorio
 {
-   public class Database : IDataBase
+    public class Database : IDataBase
     {
         private IConfiguration _configuracoes;
-        
+
         public Database(IConfiguration config)
         {
             _configuracoes = config;
@@ -52,6 +52,25 @@ namespace Repositorio
 
                 var insert = @"INSERT INTO Unidades(Identificacao, Proprietario, Condominio, Endereco) VALUES (@Identificacao, @Proprietario, @Condominio, @Endereco)";
                 conn.Execute(insert, unidades);
+            }
+        }
+        public List<Despesas> GetDespesas()
+        {
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("DefaultConnection")))
+            {
+                return (List<Despesas>)conn.Query<Despesas>("SELECT * FROM Despesas");
+            }
+        }
+        public void InsertDespesas(Despesas despesas)
+        {
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("DefaultConnection")))
+            {
+                conn.Open();
+
+                var insert = @"INSERT INTO Despesas(descricao, tipodespesas, valor, vencimentofatura, statuspagamento) VALUES (@Descricao, @Tipodespesas, @Valor, @VencimentoFatura, @StatusPagamento)";
+                conn.Execute(insert, despesas);
             }
         }
     }
