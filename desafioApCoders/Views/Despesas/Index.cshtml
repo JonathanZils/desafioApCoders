@@ -49,6 +49,7 @@
                     <th>Valor</th>
                     <th>Vencimento da fatura</th>
                     <th>Status do pagamento</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -60,8 +61,9 @@
                           <td>@despesa.Descricao</td>
                           <td>@despesa.TipoDespesas</td>
                           <td>@despesa.Valor</td>
-                          <td>@despesa.VencimentoFatura</td>
+                          <td>@despesa.VencimentoFatura.ToString("dd/MM/yyyy")</td>
                           <td>@despesa.StatusPagamento</td>
+                          <td><a href="@Url.Action("editar","despesas", new { despesas_id = despesa.Despesas_id })">Editar</a></td>
                       </tr>
                   }
               }

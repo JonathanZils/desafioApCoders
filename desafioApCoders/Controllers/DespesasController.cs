@@ -41,26 +41,26 @@ namespace desafioApCoders.Controllers
                 return RedirectToAction("Registrar");
             }
         }
-    
-
-    // GET: DespesasController/Edit/5
-    public ActionResult Edit(int id)
+   
+        [HttpGet("/despesas/editar/{despesas_id}")]
+        public ActionResult Editar(int despesas_id)
         {
-            return View();
+            var despesas = _database.FindData(despesas_id);
+            return View(despesas);
         }
 
-        // POST: DespesasController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        
+        [HttpPost("/despesas/editar/{despesas_id}")]    
+        public ActionResult Editar(Despesas despesas,int despesas_id)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _database.Update(despesas,despesas_id);
+                return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                return RedirectToAction("Editar");
             }
         }
         

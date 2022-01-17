@@ -7,6 +7,7 @@ namespace Core
 {
     public class Despesas
     {
+        public  int Despesas_id { get; set; }
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
         [Display(Name = "Tipo de despesa")]

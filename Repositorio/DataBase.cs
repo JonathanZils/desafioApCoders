@@ -4,6 +4,7 @@ using Dapper;
 using Core;
 using Npgsql;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Repositorio
 {
@@ -73,5 +74,55 @@ namespace Repositorio
                 conn.Execute(insert, despesas);
             }
         }
+        public Despesas FindDespesas(int despesas_id)
+        {
+            Despesas despesas = new Despesas();
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+                _configuracoes.GetConnectionString("DefaultConnection")))
+            {
+                try
+                {
+                    conn.Open();
+                    var query = @"SELECT * FROM despesas WHERE despesas_id =" + despesas_id;
+                    despesas = conn.Query<Despesas>(query).FirstOrDefault();
+                        
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return despesas;
+            }           
+        }
+        public int Update(Despesas despesas,int despesas_id)
+        {
+            var resultado = 0;
+            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
+               _configuracoes.GetConnectionString("DefaultConnection")))
+            {
+                try
+                {
+                    conn.Open();
+                    var query = @"UPDATE despesas SET descricao = @descricao, tipodespesas = @tipodespesas," +
+                              "valor = @valor, vencimentofatura = @vencimentofatura, statuspagamento = @statuspagamento WHERE despesas_id =" + despesas_id;
+                    resultado = conn.Execute(query, despesas);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+                return resultado;
+            }
+        }
+        
     }
 }

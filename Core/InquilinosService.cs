@@ -9,7 +9,8 @@ namespace Core
     public interface IServiceInquilino
     {
         List<Inquilinos> Get();
-        void Insert(Inquilinos inquilinos);                
+        void Insert(Inquilinos inquilinos);   
+        
     }
     public class ServiceInquilino : IServiceInquilino
     {

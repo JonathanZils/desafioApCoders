@@ -1,13 +1,11 @@
 ﻿@model Core.Despesas
 
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
 @{
-    ViewBag.tittle = "Registrar";
+    ViewBag.tittle = "editar";
 }
-<form asp-action="Registrar" asp-controller="despesas">
+<form asp-action="editar" asp-controller="despesas">
 
-    <h2>Registro de despesas</h2>
+    <h2>editar despesas</h2>
 
     <div>
         <table>
@@ -49,7 +47,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="Registrar" />
+                    <input type="submit" value="editar" />
                 </td>
             </tr>
         </table>

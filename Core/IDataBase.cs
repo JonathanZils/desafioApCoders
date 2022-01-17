@@ -13,5 +13,7 @@ namespace Core
 
         List<Despesas> GetDespesas();
         void InsertDespesas(Despesas despesas);
+        Despesas FindDespesas(int despesas_id);
+        int Update(Despesas despesas,int despesas_id);
     }
 }
