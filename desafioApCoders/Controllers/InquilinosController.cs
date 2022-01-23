@@ -1,26 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Core;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-
 
 namespace desafioApCoders.Controllers
 {
     public class InquilinosController : Controller
     {
-        private IServiceInquilino _database;
-        public InquilinosController(IServiceInquilino database)
+        private readonly IService database;
+
+        public InquilinosController(IService database)
         {
-            this._database = database;
+            this.database = database;
         }
 
         [HttpGet]
-        public ActionResult<List<Inquilinos>> Index()
+        public ActionResult<List<Inquilino>> Index()
         {
-            return View("Index", _database.Get());
+            return View("Index", database.GetInquilinos());
         }
 
         [HttpGet("inquilinos/registrar")]
@@ -30,11 +26,11 @@ namespace desafioApCoders.Controllers
         }
 
         [HttpPost("inquilinos/registrar")]
-        public ActionResult Registrar(Inquilinos inquilinos)
+        public ActionResult Registrar(Inquilino inquilinos)
         {
             if (ModelState.IsValid)
             {
-                _database.Insert(inquilinos);
+                database.InsertInquilino(inquilinos);
                 return RedirectToAction("Index");
             }
             else

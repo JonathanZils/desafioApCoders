@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Core;
 using Repositorio;
-using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace desafioApCoders
 {
@@ -21,20 +21,17 @@ namespace desafioApCoders
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            services.AddTransient<IServiceInquilino, ServiceInquilino>();
+            var connectionString = Configuration.GetSection("ConnectionString").Get<string>();
 
-            services.AddTransient<IServiceUnidades, ServiceUnidades>();
-
-            services.AddTransient<IServiceDespesas, ServiceDespesas>();
+            services.AddTransient<IDbConnection>(x => 
+                new Npgsql.NpgsqlConnection(connectionString)
+            );
+            services.AddTransient<IService, Service>();
 
             services.AddTransient<IDataBase, Database>();
 
-            services.AddControllersWithViews();
-
-            services.AddMvcCore();
-
-            services.AddControllers();
+            services.AddMvc().AddRazorRuntimeCompilation();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,15 +51,15 @@ namespace desafioApCoders
             app.UseStaticFiles();
 
             app.UseRouting();
+            
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
-            app.UseAuthorization();
-
-          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Unidades}/{action=Index}/{id= }");
+                   name: "default",
+                   pattern: "{controller=Unidades}/{action=Index}/{id= }");
             });
         }
     }

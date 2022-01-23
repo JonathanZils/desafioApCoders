@@ -1,11 +1,8 @@
-﻿using System;
-using Npgsql;
-using Dapper;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core
 {
-    public class Inquilinos
+    public class Inquilino
     {        
         public string Nome { get; set; }
       

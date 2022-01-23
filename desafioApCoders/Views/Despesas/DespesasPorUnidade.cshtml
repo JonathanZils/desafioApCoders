@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Core.Despesa>
+﻿@model DespesasPorUnidadeViewModel
 @{
-    ViewData["title"] = "index";
+    ViewData["title"] = "faturasvencidas";
 }
 <style type="text/css">
     table, tr {
@@ -20,30 +20,22 @@
         background-color: lightgray;
     }
 
-    .inline-block {
-        display: inline-block;
+    #titulo {
+        margin-bottom: 15px;
     }
 </style>
 
-<h1 class="titulo">Despesas cadastradas</h1>
+<h1 class="titulo">Despesas com faturas vencidas</h1>
 
 <div>
+    <form action="despesas/despesas-por-unidade" method="post" id="despesas-por-unidade">
+        @Html.DropDownListFor(x => x.UnidadeId, Model.Unidades, "Selecione uma unidade")
+    </form>
+</div>
+
+<div>
+    <p></p>
     <div>
-        <form action="/despesas/registrar" class="inline-block">
-            <input type="submit" value="Registrar despesa" />
-        </form>
-
-        <form action="/despesas/despesas-por-unidade" class="inline-block">
-            <input type="submit" value="Despesas por unidade" />
-        </form>
-
-        <form action="despesas/faturasvencidas" class="inline-block">
-            <input type="submit" value="Filtrar faturas vencidas" />
-        </form>
-    </div>
-
-    <div>
-        <p></p>
         <table>
             <thead>
                 <tr>
@@ -58,7 +50,7 @@
             <tbody>
                 @if (Model != null)
                 {
-                    foreach (var despesa in Model)
+                    foreach (var despesa in Model.Despesas)
                     {
                         <tr>
                             <td>@despesa.Descricao</td>
@@ -66,7 +58,7 @@
                             <td>@despesa.Valor</td>
                             <td>@despesa.VencimentoFatura.ToString("dd/MM/yyyy")</td>
                             <td>@despesa.StatusPagamento</td>
-                            <td><a href="@Url.Action("editar","despesas", new { despesasId = despesa.DespesasId })">Editar</a></td>
+                            <td><a href="@Url.Action("editar","despesas", new { despesaId = despesa.DespesasId })">Editar</a></td>
                         </tr>
                     }
                 }
@@ -74,3 +66,13 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+<script>
+        $("#despesas-por-unidade").change(onChange);
+
+        function onChange(element) {
+            window.location = "/" + this.attributes.action.value + "/" + element.target.value;
+        }
+</script>
+}

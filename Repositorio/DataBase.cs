@@ -1,128 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Dapper;
 using Core;
-using Npgsql;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Data;
 
 namespace Repositorio
 {
     public class Database : IDataBase
     {
-        private IConfiguration _configuracoes;
+        private readonly IDbConnection connection;
 
-        public Database(IConfiguration config)
+        public Database(IDbConnection connection)
         {
-            _configuracoes = config;
+            this.connection = connection;
         }
-        public List<Inquilinos> GetInquilino()
-        {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                return (List<Inquilinos>)conn.Query<Inquilinos>("SELECT * FROM inquilinos");
-            }
-        }
-        public void InsertInquilino(Inquilinos inquilino)
-        {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                conn.Open();
 
-                var insert = @"INSERT INTO inquilinos(Nome, Idade, Telefone, Email, Sexo) 
+        public List<Inquilino> GetInquilinos()
+        {
+            return connection.Query<Inquilino>("SELECT * FROM inquilinos").ToList();
+        }
+
+        public void InsertInquilino(Inquilino inquilino)
+        {
+            var insert = @"INSERT INTO inquilinos(Nome, Idade, Telefone, Email, Sexo) 
                        VALUES (@Nome, @Idade, @Telefone, @Email, @Sexo)";
-                conn.Execute(insert, inquilino);
-            }
+            
+            connection.Execute(insert, inquilino);
         }
-        public List<Unidades> GetUnidades()
-        {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                return (List<Unidades>)conn.Query<Unidades>("SELECT * FROM Unidades");
-            }
-        }
-        public void InsertUnidades(Unidades unidades)
-        {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                conn.Open();
 
-                var insert = @"INSERT INTO Unidades(Identificacao, Proprietario, Condominio, Endereco) VALUES (@Identificacao, @Proprietario, @Condominio, @Endereco)";
-                conn.Execute(insert, unidades);
-            }
-        }
-        public List<Despesas> GetDespesas()
+        public List<Unidade> GetUnidades()
         {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                return (List<Despesas>)conn.Query<Despesas>("SELECT * FROM Despesas");
-            }
+            return connection.Query<Unidade>("SELECT * FROM Unidades").ToList();
         }
-        public void InsertDespesas(Despesas despesas)
-        {
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                conn.Open();
 
-                var insert = @"INSERT INTO Despesas(descricao, tipodespesas, valor, vencimentofatura, statuspagamento) VALUES (@Descricao, @Tipodespesas, @Valor, @VencimentoFatura, @StatusPagamento)";
-                conn.Execute(insert, despesas);
-            }
-        }
-        public Despesas FindDespesas(int despesas_id)
+        public void InsertUnidades(Unidade unidades)
         {
-            Despesas despesas = new Despesas();
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-                _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                try
-                {
-                    conn.Open();
-                    var query = @"SELECT * FROM despesas WHERE despesas_id =" + despesas_id;
-                    despesas = conn.Query<Despesas>(query).FirstOrDefault();
-                        
-                }
-                catch (Exception)
-                {
+            var insert = @"INSERT INTO Unidades(Identificacao, Proprietario, Condominio, Endereco) VALUES (@Identificacao, @Proprietario, @Condominio, @Endereco)";
+            
+            connection.Execute(insert, unidades);
+        }
 
-                    throw;
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                return despesas;
-            }           
-        }
-        public int Update(Despesas despesas,int despesas_id)
+        public List<Despesa> GetDespesas()
         {
-            var resultado = 0;
-            using (Npgsql.NpgsqlConnection conn = new Npgsql.NpgsqlConnection(
-               _configuracoes.GetConnectionString("DefaultConnection")))
-            {
-                try
-                {
-                    conn.Open();
-                    var query = @"UPDATE despesas SET descricao = @descricao, tipodespesas = @tipodespesas," +
-                              "valor = @valor, vencimentofatura = @vencimentofatura, statuspagamento = @statuspagamento WHERE despesas_id =" + despesas_id;
-                    resultado = conn.Execute(query, despesas);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                return resultado;
-            }
+            return connection.Query<Despesa>("SELECT * FROM Despesas").ToList();
         }
-        
+
+        public void InsertDespesa(AdicionarDespesa despesas)
+        {
+            var insert = @"INSERT INTO despesas(descricao, tipodespesas, valor, vencimentofatura, " +
+                "statuspagamento, unidadeid)" +
+                " VALUES (@Descricao, @Tipodespesas, @Valor, @VencimentoFatura, @StatusPagamento, @UnidadeId)";
+            
+            connection.Execute(insert, despesas);
+        }
+
+        public Despesa FindDespesa(int despesasId)
+        {
+            var query = @"SELECT * FROM despesas WHERE despesasid =" + despesasId;
+            
+            return connection.Query<Despesa>(query).FirstOrDefault();
+        }
+
+        public int Update(EditarDespesa despesas, int despesaId)
+        {
+            var query = @"
+UPDATE despesas 
+    SET descricao = @descricao,
+    tipodespesas = @tipodespesas,
+    valor = @valor, 
+    vencimentofatura = @vencimentofatura, 
+    statuspagamento = @statuspagamento 
+WHERE despesasid =" + despesaId;
+
+            return connection.Execute(query, despesas);
+        }
+
+        public List<Despesa> GetFaturaVencida()
+        {
+            var query = @"SELECT * FROM despesas WHERE current_date > vencimentofatura AND statuspagamento = '1'";
+           
+            return connection.Query<Despesa>(query).ToList();
+        }
+
+        public List<Despesa> GetDespesasPorUnidade(int unidadeId)
+        {
+            var query = @"
+SELECT *
+FROM despesas
+WHERE unidadeid = @UnidadeId;";
+
+            return connection.Query<Despesa>(query, new
+            {
+                UnidadeId = unidadeId
+            }).ToList();
+        }
     }
 }

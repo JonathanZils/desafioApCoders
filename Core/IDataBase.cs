@@ -5,15 +5,15 @@ namespace Core
 {
     public interface IDataBase
     {
-        List<Inquilinos> GetInquilino();
-        void InsertInquilino(Inquilinos inquilinos);
-
-        List<Unidades> GetUnidades();
-        void InsertUnidades(Unidades unidades);
-
-        List<Despesas> GetDespesas();
-        void InsertDespesas(Despesas despesas);
-        Despesas FindDespesas(int despesas_id);
-        int Update(Despesas despesas,int despesas_id);
+        List<Inquilino> GetInquilinos();
+        void InsertInquilino(Inquilino inquilinos);
+        List<Unidade> GetUnidades();
+        void InsertUnidades(Unidade unidades);
+        List<Despesa> GetDespesas();
+        void InsertDespesa(AdicionarDespesa despesas);
+        Despesa FindDespesa(int despesaId);
+        int Update(EditarDespesa despesa, int despesaId);
+        List<Despesa> GetFaturaVencida();
+        List<Despesa> GetDespesasPorUnidade(int unidadeId);
     }
 }

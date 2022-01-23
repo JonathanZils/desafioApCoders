@@ -1,4 +1,4 @@
-﻿@model Core.Despesas
+﻿@model Core.Despesa
 
 @{
     ViewBag.tittle = "editar";
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td><label asp-for="VencimentoFatura"></label></td>
-                <td><input type="text" asp-for="VencimentoFatura"asp-format="{0:MM/dd/yyyy}" /></td>
+                <td><input type="text" asp-for="VencimentoFatura" asp-format="{0:MM/dd/yyyy}" /></td>
             </tr>
             <tr>
                 <td colspan="2"></td>
@@ -40,7 +40,7 @@
             <tr>
                 <td><label asp-for="StatusPagamento"></label></td>
                 <td>
-                    <select asp-for="StatusPagamento" asp-items="Html.GetEnumSelectList<Core.Despesas.StatusDoPagamento>()">
+                    <select asp-for="StatusPagamento" asp-items="Html.GetEnumSelectList<Core.Despesa.StatusDoPagamento>()">
                         <option selected="selected" value="">Opções</option>
                     </select>
                 </td>

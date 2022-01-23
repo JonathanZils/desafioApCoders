@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Unidades>
+﻿@model IEnumerable<Core.Unidade>
 @{
     ViewData["title"] = "Index";
 }
@@ -20,15 +20,7 @@
         background-color: lightgray;
     }
 
-    button {
-        background: none !important;
-        border: none;
-        padding: 0 !important;
-        font-family: arial, sans-serif;
-        color: #069;
-        text-decoration: underline;
-        cursor: pointer;
-    }
+   
 </style>
 
 <h1>Unidades cadastradas</h1>
@@ -48,7 +40,7 @@
                     <th>Proprietario</th>
                     <th>Condominio</th>
                     <th>Endereço</th> 
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -56,14 +48,13 @@
                 {
                     foreach (var unidades in Model)
                     {
-                        <tr>
-                            <td>@unidades.Endereco</td>
-                            <td>@unidades.Proprietario</td>
-                            <td>@unidades.Condominio</td>
-                            <td>@unidades.Endereco</td>    
-                            <td><form asp-action="/unidades/vizualizar">
-                                      <input type="submit" value="Vizualizar"></form></td>
-                        </tr>
+                <tr>
+                    <td>@unidades.Endereco</td>
+                    <td>@unidades.Proprietario</td>
+                    <td>@unidades.Condominio</td>
+                    <td>@unidades.Endereco</td>
+                    
+                </tr>
                     }
                 }
             </tbody>

@@ -1,50 +1,73 @@
-﻿@model Core.Despesas
+﻿@model DespesaViewModel
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewBag.tittle = "Registrar";
 }
+
 <form asp-action="Registrar" asp-controller="despesas">
 
     <h2>Registro de despesas</h2>
 
+    @*<div>
+        @Html.ValidationSummary(false)
+    </div>*@
+
     <div>
         <table>
             <tr>
-                <td><label asp-for="Descricao"></label></td>
-                <td><input asp-for="Descricao" /></td>
+                <td><label asp-for="AdicionarDespesa.UnidadeId"></label></td>
+                <td>@Html.DropDownListFor(m => m.AdicionarDespesa.UnidadeId, Model.Unidades, "opcoes")
+                </td>
             </tr>
             <tr>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><label asp-for="TipoDespesas"></label></td>
-                <td><input asp-for="TipoDespesas" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><label asp-for="Valor"></label></td>
-                <td><input asp-for="Valor" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><label asp-for="VencimentoFatura"></label></td>
-                <td><input type="text" asp-for="VencimentoFatura"asp-format="{0:MM/dd/yyyy}" /></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
-                <td><label asp-for="StatusPagamento"></label></td>
+                <td><label asp-for="AdicionarDespesa.Descricao"></label></td>
                 <td>
-                    <select asp-for="StatusPagamento" asp-items="Html.GetEnumSelectList<Core.Despesas.StatusDoPagamento>()">
+                    <input asp-for="AdicionarDespesa.Descricao" />
+                    @Html.ValidationMessageFor(x => x.AdicionarDespesa.Descricao)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="AdicionarDespesa.TipoDespesas"></label></td>
+                <td>
+                    <input asp-for="AdicionarDespesa.TipoDespesas" />
+                    @Html.ValidationMessageFor(x => x.AdicionarDespesa.TipoDespesas)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="AdicionarDespesa.Valor"></label></td>
+                <td>
+                    <input asp-for="AdicionarDespesa.Valor" />
+                    @Html.ValidationMessageFor(x => x.AdicionarDespesa.Valor)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="AdicionarDespesa.VencimentoFatura"></label></td>
+                <td>
+                    <input type="text" asp-for="AdicionarDespesa.VencimentoFatura" asp-format="{0:MM/dd/yyyy}" />
+                    @Html.ValidationMessageFor(x => x.AdicionarDespesa.VencimentoFatura)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td><label asp-for="AdicionarDespesa.StatusPagamento"></label></td>
+                <td>
+                    <select asp-for="AdicionarDespesa.StatusPagamento" asp-items="Html.GetEnumSelectList<Core.Despesa.StatusDoPagamento>()">
                         <option selected="selected" value="">Opções</option>
                     </select>
+                    @Html.ValidationMessageFor(x => x.AdicionarDespesa.StatusPagamento)
                 </td>
             </tr>
             <tr>

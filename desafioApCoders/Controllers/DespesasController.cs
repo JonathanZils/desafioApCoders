@@ -5,64 +5,100 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using desafioApCoders.Models;
 
 namespace desafioApCoders.Controllers
 {
     public class DespesasController : Controller
     {
-        private IServiceDespesas _database;
-        public DespesasController(IServiceDespesas database)
+        private IService database;
+
+        public DespesasController(IService database)
         {
-            this._database = database;
+            this.database = database;
         }
 
         [HttpGet]
-        public ActionResult<List<Despesas>> Index()
+        public ActionResult<List<Despesa>> Index()
         {
-            return View("Index", _database.Get());
+            return View("Index", database.GetDespesas());
         }
 
         [HttpGet("despesas/registrar")]
         public ActionResult Registrar()
         {
-            return View();
+            var viewmodel = new DespesaViewModel();
+            var unidades = database.GetUnidades();
+
+            viewmodel.Unidades = new SelectList(unidades, "UnidadeId", "Condominio");
+
+            return View(viewmodel);
         }
 
         [HttpPost("despesas/registrar")]
-        public ActionResult Registrar(Despesas despesas)
+        public ActionResult Registrar(AdicionarDespesa adicionarDespesa)
         {
             if (ModelState.IsValid)
             {
-                _database.Insert(despesas);
+                database.InsertDespesa(adicionarDespesa);
                 return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Registrar");
+                return Registrar();
             }
         }
-   
-        [HttpGet("/despesas/editar/{despesas_id}")]
-        public ActionResult Editar(int despesas_id)
+
+        [HttpGet("/despesas/editar/{despesaId}")]
+        public ActionResult Editar(int despesaId)
         {
-            var despesas = _database.FindData(despesas_id);
+            var despesas = database.FindData(despesaId);
             return View(despesas);
         }
 
-        
-        [HttpPost("/despesas/editar/{despesas_id}")]    
-        public ActionResult Editar(Despesas despesas,int despesas_id)
+        [HttpPost("/despesas/editar/{despesaid}")]
+        public ActionResult Editar(EditarDespesa despesas, int despesaId)
         {
             if (ModelState.IsValid)
             {
-                _database.Update(despesas,despesas_id);
+                database.Update(despesas, despesaId);
                 return RedirectToAction("Index");
             }
             else
             {
-                return RedirectToAction("Editar");
+                return Editar(despesaId);
             }
         }
-        
+
+        [HttpGet("/despesas/faturasvencidas")]
+        public ActionResult FaturasVencidas()
+        {
+            return View("faturasvencidas", database.GetFaturaVencida());
+        }
+
+        [HttpGet("/despesas/despesas-por-unidade")]
+        public ActionResult DespesasPorUnidade()
+        {
+            var unidades = database.GetUnidades();
+
+            return View("DespesasPorUnidade", new DespesasPorUnidadeViewModel
+            {
+                Unidades = new SelectList(unidades, "UnidadeId", "Condominio")
+            });
+        }
+
+        [HttpGet("/despesas/despesas-por-unidade/{unidadeId}")]
+        public ActionResult DespesasPorUnidade(int unidadeId)
+        {
+            var unidades = database.GetUnidades();
+            var despesas = database.GetDespesasPorUnidade(unidadeId);
+
+            return View("DespesasPorUnidade", new DespesasPorUnidadeViewModel
+            {
+                Unidades = new SelectList(unidades, "UnidadeId", "Condominio"),
+                Despesas = despesas
+            });
+        }
     }
 }

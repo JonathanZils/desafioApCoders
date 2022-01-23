@@ -10,16 +10,16 @@ namespace desafioApCoders.Controllers
 {
     public class UnidadesController : Controller
     {
-        private IServiceUnidades _database;
-        public UnidadesController(IServiceUnidades database)
+        private IService database;
+        public UnidadesController(IService database)
         {
-            this._database = database;
+            this.database = database;
         }
 
         [HttpGet]
-        public ActionResult<List<Unidades>> Index()
+        public ActionResult<List<Unidade>> Index()
         {
-            return View("Index", _database.Get());
+            return View("Index", database.GetUnidades());
         }
 
         [HttpGet("unidades/registrar")]
@@ -29,11 +29,11 @@ namespace desafioApCoders.Controllers
         }
 
         [HttpPost("unidades/registrar")]
-        public ActionResult Registrar(Unidades unidades)
+        public ActionResult Registrar(Unidade unidades)
         {
             if (ModelState.IsValid)
             {
-                _database.Insert(unidades);
+                database.InsertUnidade(unidades);
                 return RedirectToAction("Index");
             }
             else

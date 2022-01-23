@@ -1,18 +1,18 @@
 ﻿using System;
-using Npgsql;
-using Dapper;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core
 {
-    public class Despesas
+    public class Despesa
     {
-        public  int Despesas_id { get; set; }
+        [Display(Name = "Condominio")]
+        public int UnidadeId { get; set; }
+        public  int DespesasId { get; set; }
         [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "A descrição é obrigatória")]
         public string Descricao { get; set; }
         [Display(Name = "Tipo de despesa")]
         public string TipoDespesas { get; set; }
-
         public decimal Valor { get; set; }
         [Display(Name = "Vencimento da fatura")]
         public DateTime VencimentoFatura { get; set; }
