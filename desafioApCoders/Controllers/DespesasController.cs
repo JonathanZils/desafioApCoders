@@ -57,7 +57,7 @@ namespace desafioApCoders.Controllers
             return View(despesas);
         }
 
-        [HttpPost("/despesas/editar/{despesaid}")]
+        [HttpPost("/despesas/editar/{despesaId}")]
         public ActionResult Editar(EditarDespesa despesas, int despesaId)
         {
             if (ModelState.IsValid)
