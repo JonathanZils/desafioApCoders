@@ -11,24 +11,24 @@ baixar o PostgreSql
 
 Entrar na pasta raiz da aplicação e rodar o cmd.
 
- Compilar a aplicação usando o comando: dotnet run ConnectionString="User ID=postgres;Password=123;Host=localhost;Port=5432;Database=postgres;"
+ -Compilar a aplicação usando o comando: dotnet run ConnectionString="User ID=postgres;Password=123;Host=localhost;Port=5432;Database=postgres;"
  Lembrando de usar a sua propria connection string no lugar do "User ID=postgres;Password=123;Host=localhost;Port=5432;Database=postgres;"
  Copiar o link do localhost que ira aparecer e colar em uma pagina da web.
  Entrar na pagina como "não seguro" se necessario.
 
 *Tecnologias utilizadas:
 
- Visual studio community 19.
+ -Visual studio community 19.
  
- PostgreSql.
+ -PostgreSql.
  
  *A solução foi criada usando três projetos
  
-  Core() onde é implementado a logica.
+  -Core() onde é implementado a logica.
   
-  desafioApCoders() onde é implementado a parte que sera exibida na tela.
+  -desafioApCoders() onde é implementado a parte que sera exibida na tela.
   
-  Repositorio() onde é implementado toda parte de banco de dados.
+  -Repositorio() onde é implementado toda parte de banco de dados.
   
   
 *Essa aplicação foi feita com o padrão Mvc.
