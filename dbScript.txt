@@ -1,0 +1,28 @@
+
+create table unidades(
+unidadeid serial,
+identificacao varchar,
+proprietario varchar,
+endereco varchar,
+condominio varchar,
+primary key(unidadeid));
+
+create table despesas(
+despesasid SERIAL,
+descricao varchar,
+tipodespesas varchar,
+valor decimal,
+statuspagamento varchar,
+vencimentofatura date,
+unidadeid int,
+primary key (despesasid),
+foreign key (unidadeid) references unidades (unidadeid));
+
+create table inquilinos(
+inquilinos_id serial,
+nome varchar,
+idade int,
+telefone int,
+email varchar,
+sexo varchar,
+primary key(inquilinos_id));
